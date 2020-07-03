@@ -1,0 +1,122 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
+    },
+    "paths": {
+        "/student/createStudent": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Student"
+                ],
+                "summary": "创建Student",
+                "parameters": [
+                    {
+                        "description": "创建Student",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Topic"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Post": {
+            "type": "object",
+            "required": [
+                "category_id",
+                "md",
+                "topic_id"
+            ],
+            "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
+                "md": {
+                    "type": "string"
+                },
+                "topic_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Tag": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Topic": {
+            "type": "object",
+            "required": [
+                "difficulty",
+                "md",
+                "title"
+            ],
+            "properties": {
+                "difficulty": {
+                    "type": "integer"
+                },
+                "md": {
+                    "type": "string"
+                },
+                "post": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Post"
+                    }
+                },
+                "similar": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Topic"
+                    }
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "source_url": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

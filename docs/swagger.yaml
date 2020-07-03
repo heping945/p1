@@ -1,0 +1,78 @@
+definitions:
+  model.Post:
+    properties:
+      category_id:
+        type: integer
+      md:
+        type: string
+      topic_id:
+        type: integer
+    required:
+    - category_id
+    - md
+    - topic_id
+    type: object
+  model.Tag:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  model.Topic:
+    properties:
+      difficulty:
+        type: integer
+      md:
+        type: string
+      post:
+        items:
+          $ref: '#/definitions/model.Post'
+        type: array
+      similar:
+        items:
+          $ref: '#/definitions/model.Topic'
+        type: array
+      slug:
+        type: string
+      source_url:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      title:
+        type: string
+    required:
+    - difficulty
+    - md
+    - title
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /student/createStudent:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Student
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Topic'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"获取成功"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建Student
+      tags:
+      - Student
+swagger: "2.0"
