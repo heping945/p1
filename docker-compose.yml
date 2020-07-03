@@ -15,6 +15,7 @@ services:
     volumes:
       - p1_mysql:/var/lib/mysql:rw
     restart: always
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0
 
   web:
     build:
