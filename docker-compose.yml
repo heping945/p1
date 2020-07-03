@@ -11,6 +11,7 @@ services:
     environment:
       - MYSQL_DATABASE=p1
       - MYSQL_ROOT_PASSWORD=123
+      - LANG=C.UTF-8
     volumes:
       - p1_mysql:/var/lib/mysql:rw
     restart: always
