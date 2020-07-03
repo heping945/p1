@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   p1_mysql:
+  p1_static:
 
 services:
   mysql:
@@ -23,6 +24,8 @@ services:
       - 9933:9933
     environment:
       - MYSQL_HOST=mysql
+    volumes:
+      - p1_static:/app/dist
     depends_on:
       - mysql
 
@@ -33,6 +36,8 @@ services:
     container_name: p1_nginx
     ports:
       - 80:80
+    volumes:
+      - p1_static:/etc/nginx/post/static
     depends_on:
       - web
     command: nginx -g 'daemon off;'
