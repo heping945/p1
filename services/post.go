@@ -18,8 +18,10 @@ func GetPostList(c *gin.Context) {
 		for _, item := range posts {
 			var topicIfExist bool
 			if err := global.GVA_DB.First(&topic, item.TopicID).Error; err != nil {
+				fmt.Println(topic, 1)
 				topicIfExist = false
 			} else {
+				fmt.Println(topic, 2)
 				topicIfExist = true
 			}
 			_posts = append(_posts, model.TransFormPost{ID: item.ID, Category: item.Category, TopicID: item.TopicID, TopicIfExist: topicIfExist, ShortMd: item.Md[:66]})

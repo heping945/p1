@@ -1,41 +1,45 @@
-version: '2'
+version: '3'
 
 volumes:
-  p1_p1_mysql:
-  p1_p1_static:
+  p1_mysql:
+  p1_static:
 
 services:
   mysql:
     image: mysql:5.7.27
-    container_name: pp_mysql
+    container_name: p1_mysql
     environment:
       - MYSQL_DATABASE=p1
       - MYSQL_ROOT_PASSWORD=123
       - LANG=C.UTF-8
     volumes:
-      - p1_p1_mysql:/var/lib/mysql:rw
+      - p1_mysql:/var/lib/mysql:rw
     restart: always
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-connect='SET NAMES utf8mb4;' --innodb-flush-log-at-trx-commit=0
 
   web:
-    image: registry.cn-hangzhou.aliyuncs.com/pinge945/hp:hpweb
-    container_name: pp_web
+    build:
+      context: .
+      dockerfile: dockerconfig/dev/web/Dockerfile
+    container_name: p1_web
     ports:
       - 9933:9933
     environment:
       - MYSQL_HOST=mysql
     volumes:
-      - pp_static:/app/dist
+      - p1_static:/app/dist
     depends_on:
       - mysql
 
   nginx:
-    image: registry.cn-hangzhou.aliyuncs.com/pinge945/hp:hpnginx
-    container_name: pp_nginx
+    build:
+      context: .
+      dockerfile: dockerconfig/dev/nginx/Dockerfile
+    container_name: p1_nginx
     ports:
       - 80:80
     volumes:
-      - pp_static:/etc/nginx/post/static
+      - p1_static:/etc/nginx/post/static
     depends_on:
       - web
     command: nginx -g 'daemon off;'
